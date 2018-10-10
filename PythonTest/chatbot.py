@@ -1,6 +1,8 @@
 import random
 import Tkinter as tk
 import sys
+from docx import Document
+import time
 
 root = tk.Tk()
 user_input = tk.Entry(root)
@@ -13,6 +15,13 @@ responses = ['Okay', "I'm fine"]
 huh = "I did not understand what you said"
 
 #memory = []
+
+def print_to_doc():
+    document = Document()
+    with open("chatbot_output.txt") as file:
+        for line in file:
+            p = document.add_paragraph(line)
+    document.save('chatbot_output.docx')
 
 def cb(event):
     user_text = user_input.get()
@@ -30,6 +39,8 @@ def cb(event):
             sys.stdout = f
             print question_answers[0] + ' ' + user_text_str
             del question_answers[0]
+            #if len(question_answers) == 0:
+            #    sys.stdout = sys.__stdout__
             sys.stdout = sys.__stdout__
     output.config(text=bot_text)
 
@@ -38,3 +49,11 @@ output = tk.Label(root, text='')
 output.pack()
 
 tk.mainloop()
+
+
+
+
+
+
+
+
